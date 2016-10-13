@@ -11,11 +11,6 @@ export const disableSelect = {
 
 export const defaultTheme = {
   title: {
-    userSelect: 'none',
-    WebkitUserSelect: 'none',
-    msUserSelect: 'none',
-    MozUserSelect: 'none',
-    OUserSelect: 'none',
     overflow: 'hidden',
     width: '100%',
     height: 25,
@@ -228,7 +223,7 @@ export default class DnR extends React.Component {
     let titleBar = (
         <div ref="title"
           style={{
-            ...theme.title,
+            ...(this.clicked ? Object.assign({}, theme.title, disableSelect) : theme.title),
             ...titleStyle,
             cursor
           }}>

@@ -149,7 +149,7 @@ export default class DnR extends React.Component {
       let hits = this.hitEdges
       const boundingBox = this.clicked.boundingBox
 
-      if (hits.top || hits.bottom || hits.left || hits.right) {
+      if (hits && (hits.top || hits.bottom || hits.left || hits.right)) {
         if (hits.right) this.frameRect.width = Math.max(this.cursorX - boundingBox.left, minWidth) + 'px'
         if (hits.bottom) this.frameRect.height = Math.max(this.cursorY - boundingBox.top, minHeight) + 'px'
 
@@ -282,7 +282,16 @@ export default class DnR extends React.Component {
   getTitleRect() {
     return this.refs.title.getBoundingClientRect()
   }
+  _isFullScreen() {
+    return document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement
+  }
   _cursorStatus(e){
+    if (this._isFullScreen()) {
+      return
+    }
     const boundingBox = this.getFrameRect()
     this.cursorX = e.clientX
     this.cursorY = e.clientY

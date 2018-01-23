@@ -68,9 +68,9 @@ var DnR = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (DnR.__proto__ || Object.getPrototypeOf(DnR)).call(this, props));
 
-    var _this$props = _this.props;
-    var transition = _this$props.transition;
-    var theme = _this$props.theme;
+    var _this$props = _this.props,
+        transition = _this$props.transition,
+        theme = _this$props.theme;
 
     _this.cursorX = 0;
     _this.cursorY = 0;
@@ -90,12 +90,12 @@ var DnR = function (_React$Component) {
   _createClass(DnR, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _props = this.props;
-      var initialWidth = _props.initialWidth;
-      var initialHeight = _props.initialHeight;
-      var initialTop = _props.initialTop;
-      var initialLeft = _props.initialLeft;
-      var attachedTo = _props.attachedTo;
+      var _props = this.props,
+          initialWidth = _props.initialWidth,
+          initialHeight = _props.initialHeight,
+          initialTop = _props.initialTop,
+          initialLeft = _props.initialLeft,
+          attachedTo = _props.attachedTo;
 
 
       var boundingBox = this.getFrameRect();
@@ -181,21 +181,20 @@ var DnR = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var _props2 = this.props;
-      var style = _props2.style;
-      var contentStyle = _props2.contentStyle;
-      var titleStyle = _props2.titleStyle;
-      var theme = _props2.theme;
-      var minWidth = _props2.minWidth;
-      var minHeight = _props2.minHeight;
-      var animate = _props2.animate;
-      var cursorRemap = _props2.cursorRemap;
-      var children = _props2.children;
-      var boundary = _props2.boundary;
-      var onMove = _props2.onMove;
-      var onResize = _props2.onResize;
-
-      var other = _objectWithoutProperties(_props2, ["style", "contentStyle", "titleStyle", "theme", "minWidth", "minHeight", "animate", "cursorRemap", "children", "boundary", "onMove", "onResize"]);
+      var _props2 = this.props,
+          style = _props2.style,
+          contentStyle = _props2.contentStyle,
+          titleStyle = _props2.titleStyle,
+          theme = _props2.theme,
+          minWidth = _props2.minWidth,
+          minHeight = _props2.minHeight,
+          animate = _props2.animate,
+          cursorRemap = _props2.cursorRemap,
+          children = _props2.children,
+          boundary = _props2.boundary,
+          onMove = _props2.onMove,
+          onResize = _props2.onResize,
+          other = _objectWithoutProperties(_props2, ["style", "contentStyle", "titleStyle", "theme", "minWidth", "minHeight", "animate", "cursorRemap", "children", "boundary", "onMove", "onResize"]);
 
       var pervFrameRect = _extends({}, this.frameRect);
 
@@ -203,7 +202,7 @@ var DnR = function (_React$Component) {
         var hits = this.hitEdges;
         var boundingBox = this.clicked.boundingBox;
 
-        if (hits.top || hits.bottom || hits.left || hits.right) {
+        if (hits && (hits.top || hits.bottom || hits.left || hits.right)) {
           if (hits.right) this.frameRect.width = Math.max(this.cursorX - boundingBox.left, minWidth) + 'px';
           if (hits.bottom) this.frameRect.height = Math.max(this.cursorY - boundingBox.top, minHeight) + 'px';
 
@@ -229,11 +228,11 @@ var DnR = function (_React$Component) {
       }
 
       if (boundary) {
-        var _frameRect = this.frameRect;
-        var top = _frameRect.top;
-        var left = _frameRect.left;
-        var width = _frameRect.width;
-        var height = _frameRect.height;
+        var _frameRect = this.frameRect,
+            top = _frameRect.top,
+            left = _frameRect.left,
+            width = _frameRect.width,
+            height = _frameRect.height;
 
         if (typeof boundary.top === 'number' && top < boundary.top) {
           this.frameRect.top = boundary.top;
@@ -334,8 +333,16 @@ var DnR = function (_React$Component) {
       return this.refs.title.getBoundingClientRect();
     }
   }, {
+    key: "_isFullScreen",
+    value: function _isFullScreen() {
+      return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    }
+  }, {
     key: "_cursorStatus",
     value: function _cursorStatus(e) {
+      if (this._isFullScreen()) {
+        return;
+      }
       var boundingBox = this.getFrameRect();
       this.cursorX = e.clientX;
       this.cursorY = e.clientY;
